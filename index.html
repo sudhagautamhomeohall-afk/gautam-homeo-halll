@@ -266,9 +266,19 @@ style="width:100%;padding:12px;margin-bottom:10px;">
 <option>Dr. V. K. Singh</option>
 </select>
 
+<div style="margin-bottom:15px;">
+<label style="display:block;margin-bottom:8px;font-weight:bold;">
+📅 Select Date
+</label>
+
 <input id="appointmentDate"
 type="date"
-style="width:100%;padding:12px;">
+style="
+width:100%;
+padding:12px;
+border:1px solid #ccc;
+border-radius:8px;">
+</div>
   
 
 <div style="
@@ -424,10 +434,27 @@ btn.addEventListener("click", async ()=>{
 
 const slot = btn.innerText;
 
+const patientName =
+document.getElementById("patientName").value;
+
+const patientMobile =
+document.getElementById("patientMobile").value;
+
+const doctor =
+document.getElementById("doctorSelect").value;
+
+const date =
+document.getElementById("appointmentDate").value;
+
 await setDoc(
 doc(db,"appointments",slot),
 {
-booked:true
+booked:true,
+patientName,
+patientMobile,
+doctor,
+date,
+slot
 }
 );
 
