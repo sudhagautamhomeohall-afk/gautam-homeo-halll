@@ -1,4 +1,4 @@
-cc<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
@@ -446,9 +446,9 @@ document.getElementById("doctorSelect").value;
 const date =
 document.getElementById("appointmentDate").value;
 
-await setDoc(
-doc(db,"appointments",slot),
-{
+const bookingId =
+date + "_" + doctor + "_" + slot;
+
 booked:true,
 patientName,
 patientMobile,
@@ -470,7 +470,7 @@ async function checkSlot(btn){
 const slot = btn.innerText;
 
 const snap = await getDoc(
-doc(db,"appointments",slot)
+doc(db,"appointments",bookingId)
 );
 
 if(snap.exists()){
