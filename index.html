@@ -286,42 +286,37 @@ gap:10px;
 margin-top:15px;
 ">
 
-<button>09:00 AM</button>
-<button>09:30 AM</button>
-<button>10:00 AM</button>
+<div id="slots">
+<button class="slot">09:00 AM</button>
+<button class="slot">09:30 AM</button>
+<button class="slot">10:00 AM</button>
+<button class="slot">10:30 AM</button>
+<button class="slot">11:00 AM</button>
+<button class="slot">11:30 AM</button>
 
-<button style="
-background:red;
-color:white;">
-❌ 10:30 AM
-</button>
+<button class="slot">12:00 PM</button>
+<button class="slot">12:30 PM</button>
+<button class="slot">01:00 PM</button>
 
-<button>11:00 AM</button>
-<button>11:30 AM</button>
+<button class="slot">01:30 PM</button>
+<button class="slot">02:00 PM</button>
+<button class="slot">02:30 PM</button>
 
-<button>12:00 PM</button>
-<button>12:30 PM</button>
-<button>01:00 PM</button>
+<button class="slot">03:00 PM</button>
+<button class="slot">03:30 PM</button>
+<button class="slot">04:00 PM</button>
 
-<button>01:30 PM</button>
-<button>02:00 PM</button>
-<button>02:30 PM</button>
+<button class="slot">04:30 PM</button>
+<button class="slot">05:00 PM</button>
+<button class="slot">05:30 PM</button>
 
-<button>03:00 PM</button>
-<button>03:30 PM</button>
-<button>04:00 PM</button>
+<button class="slot">06:00 PM</button>
+<button class="slot">06:30 PM</button>
+<button class="slot">07:00 PM</button>
 
-<button>04:30 PM</button>
-<button>05:00 PM</button>
-<button>05:30 PM</button>
-
-<button>06:00 PM</button>
-<button>06:30 PM</button>
-<button>07:00 PM</button>
-
-<button>07:30 PM</button>
-<button>08:00 PM</button>
-<button>08:30 PM</button>
+<button class="slot">07:30 PM</button>
+<button class="slot">08:00 PM</button>
+<button class="slot">08:30 PM</button>
 
 </div>
 
@@ -400,14 +395,71 @@ Varanasi, Uttar Pradesh 221002
 href="https://wa.me/918115435299">
 💬
 </a>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+doc,
+setDoc,
+getDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyBH4MHEhLhsogpCtcLaVoDXME5i52Ay7AA",
+  apiKey: "YOUR_API_KEY",
   authDomain: "gautam-homeo-hall.firebaseapp.com",
   projectId: "gautam-homeo-hall",
   storageBucket: "gautam-homeo-hall.firebasestorage.app",
   messagingSenderId: "993725357627",
-  appId: "1:993725357627:web:e43471e5916e1b5207861e",
-  measurementId: "G-ZX4BCDT4KP"
+  appId: "1:993725357627:web:e43471e5916e1b5207861e"
 };
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const buttons = document.querySelectorAll(".slot");
+
+buttons.forEach(btn => {
+
+checkSlot(btn);
+
+btn.addEventListener("click", async ()=>{
+
+const slot = btn.innerText;
+
+await setDoc(
+doc(db,"appointments",slot),
+{
+booked:true
+}
+);
+
+btn.innerHTML="❌ "+slot;
+btn.disabled=true;
+
+});
+
+});
+
+async function checkSlot(btn){
+
+const slot = btn.innerText;
+
+const snap = await getDoc(
+doc(db,"appointments",slot)
+);
+
+if(snap.exists()){
+
+btn.innerHTML="❌ "+slot;
+btn.disabled=true;
+
+}
+
+}
+
+</script>
 </body>
 </html>         
