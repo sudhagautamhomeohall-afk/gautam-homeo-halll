@@ -268,7 +268,7 @@ style="width:100%;padding:12px;margin-bottom:10px;">
 
 <div style="margin-bottom:15px;">
 <label style="display:block;margin-bottom:8px;font-weight:bold;">
-📅 Select Date
+Select Date
 </label>
 
 <input id="appointmentDate"
@@ -281,14 +281,20 @@ border-radius:8px;">
 </div>
   
 
-<div style="
-background:white;
-padding:25px;
-border-radius:15px;
-box-shadow:0 5px 15px rgba(0,0,0,.08);
-max-width:700px;
-margin:auto;
-">
+<style>
+.slot{
+padding:10px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+background:#e8f5e9;
+}
+
+.slot.selected{
+background:#2196f3 !important;
+color:white;
+}
+</style>
 
 
 <div id="slots">
@@ -325,13 +331,6 @@ margin:auto;
 
 </div>
 
-<br>
-
-<label><b>Coupon Code</b></label><br><br>
-
-<input type="text"
-placeholder="WELCOME50"
-style="width:100%;padding:12px;">
 
 <br><br>
 
@@ -379,7 +378,7 @@ Varanasi, Uttar Pradesh 221002
 <p><b>📞 Call:</b> 9793908883</p>
 <br>
 
-<p><b>💬 WhatsApp:</b> 8115435299</p>
+<p><b>💬 WhatsApp:</b> 9793908883</p>
 <br>
 
 <p><b>🕒 Timing:</b> 9:00 AM – 9:00 PM</p>
@@ -397,7 +396,7 @@ Varanasi, Uttar Pradesh 221002
 </footer>
 
 <a class="floating"
-href="https://wa.me/918115435299">
+href="https://wa.me/919793908883">
 💬
 </a>
 <script type="module">
@@ -481,6 +480,18 @@ btn.disabled=true;
 }
 
 }
+document.querySelectorAll(".slot").forEach(btn=>{
+
+btn.addEventListener("click",()=>{
+
+document.querySelectorAll(".slot")
+.forEach(b=>b.classList.remove("selected"));
+
+btn.classList.add("selected");
+
+});
+
+});
 
 </script>
 </body>
