@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel - Gautam Homeo Hall</title>
+  <style>
+    body{font-family:Arial;padding:20px;background:#f5f5f5}
+    .card{background:white;padding:15px;margin:10px 0;border-radius:10px}
+    button{padding:8px 12px;margin:5px;border:none;border-radius:5px;cursor:pointer}
+    .approve{background:green;color:white}
+    .reject{background:red;color:white}
+  </style>
+</head>
+<body>
+
+<h2>📋 Pending Booking Requests</h2>
+
+<div id="list"></div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBH4MHEhLhsogpCtcLaVoDXME5i52Ay7AA",
+  authDomain: "gautam-homeo-hall.firebaseapp.com",
+  projectId: "gautam-homeo-hall",
+  storageBucket: "gautam-homeo-hall.firebasestorage.app",
+  messagingSenderId: "993725357627",
+  appId: "1:993725357627:web:e43471e5916e1b5207861e"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function loadBookings(){
+
+  const snap = await getDocs(collection(db,"appointments"));
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+
+  snap.forEach(docSnap => {
+
+    const data = docSnap.data();
+
+    if(data.status === "pending"){
+
+      const div = document.createElement("div");
+      div.className = "card";
+
+      div.innerHTML = `
+        <b>Patient:</b> ${data.patientName} <br>
+        <b>Mobile:</b> ${data.patientMobile} <br>
+        <b>Doctor:</b> ${data.doctor} <br>
+        <b>Date:</b> ${data.date} <br>
+        <b>Slot:</b> ${data.slot} <br>
+        <b>Status:</b> ${data.status} <br>
+
+        <button class="approve">Approve</button>
+        <button class="reject">Reject</button>
+      `;
+
+      // APPROVE
+      div.querySelector(".approve").onclick = async () => {
+        await updateDoc(doc(db,"appointments",docSnap.id),{
+          status:"confirmed"
+        });
+        alert("Approved!");
+        loadBookings();
+      };
+
+      // REJECT
+      div.querySelector(".reject").onclick = async () => {
+        await updateDoc(doc(db,"appointments",docSnap.id),{
+          status:"rejected"
+        });
+        alert("Rejected!");
+        loadBookings();
+      };
+
+      list.appendChild(div);
+    }
+
+  });
+}
+
+loadBookings();
+
+</script>
+
+</body>
+</html>
