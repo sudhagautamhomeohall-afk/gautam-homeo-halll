@@ -440,36 +440,28 @@ buttons.forEach(btn => {
 
 checkSlot(btn);
 
-btn.addEventListener("click", async ()=>{
+btn.addEventListener("click", async () => {
 
-const slot = btn.innerText;
+  const slot = btn.innerText;
 
-const patientName =
-document.getElementById("patientName").value;
+  const patientName = document.getElementById("patientName").value;
+  const patientMobile = document.getElementById("patientMobile").value;
+  const doctor = document.getElementById("doctorSelect").value;
+  const date = document.getElementById("appointmentDate").value;
 
-const patientMobile =
-document.getElementById("patientMobile").value;
+  const bookingId = date + "_" + doctor + "_" + slot;
 
-const doctor =
-document.getElementById("doctorSelect").value;
+  await setDoc(doc(db, "appointments", bookingId), {
+    patientName,
+    patientMobile,
+    doctor,
+    date,
+    slot,
+    status: "pending"
+  });
 
-const date =
-document.getElementById("appointmentDate").value;
-
-const bookingId =
-date + "_" + doctor + "_" + slot;
-
-booked:true,
-patientName,
-patientMobile,
-doctor,
-date,
-slot
-}
-);
-
-btn.innerHTML="❌ "+slot;
-btn.disabled=true;
+  btn.innerHTML = "⏳ Pending";
+  btn.disabled = true;
 
 });
 
@@ -479,15 +471,15 @@ async function checkSlot(btn){
 
 const slot = btn.innerText;
 
-const snap = await getDoc(
-doc(db,"appointments",bookingId)
-);
+const bookingId = "TEMP"; 
+// ⚠️ IMPORTANT: yaha proper logic baad me improve karenge
 
-if(snap.exists()){
+const snap = await getDoc(doc(db,"appointments",bookingId));
 
-btn.innerHTML="❌ "+slot;
-btn.disabled=true;
-
+if(snap.exists() && snap.data().status === "confirmed"){
+    btn.innerHTML = "❌ " + slot;
+    btn.disabled = true;
+  }
 }
 
 }
