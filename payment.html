@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Payment - Gautam Homeo Hall</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f4f7f9;
+padding:20px;
+}
+
+.card{
+max-width:500px;
+margin:auto;
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+.logo{
+text-align:center;
+margin-bottom:15px;
+}
+
+.logo h1{
+color:#0b6b4a;
+}
+
+.amount-box{
+background:#f8f8f8;
+padding:15px;
+border-radius:12px;
+text-align:center;
+margin:15px 0;
+}
+
+.amount-box h2{
+color:#0b6b4a;
+font-size:32px;
+}
+
+.qr-box{
+text-align:center;
+margin:20px 0;
+}
+
+.qr-placeholder{
+width:220px;
+height:220px;
+margin:auto;
+border:2px dashed #999;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:15px;
+color:#777;
+}
+
+.upi-box{
+background:#f8f8f8;
+padding:15px;
+border-radius:12px;
+margin-top:15px;
+text-align:center;
+}
+
+.copy-btn{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+background:#0b6b4a;
+color:white;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+}
+
+.pay-btn{
+width:100%;
+padding:14px;
+margin-top:20px;
+border:none;
+background:#2196f3;
+color:white;
+border-radius:10px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.success{
+display:none;
+margin-top:20px;
+background:#e8f5e9;
+padding:15px;
+border-radius:12px;
+text-align:center;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="logo">
+<h1>🏥 Gautam Homeo Hall</h1>
+<p>Secure Payment</p>
+</div>
+
+<div class="amount-box">
+<p>Total Amount</p>
+<h2>₹199</h2>
+</div>
+
+<div class="qr-box">
+
+<h3>Scan QR & Pay</h3>
+
+<div class="qr-placeholder">
+QR CODE HERE
+</div>
+
+</div>
+
+<div class="upi-box">
+
+<h3>UPI ID</h3>
+
+<p id="upi">
+yourupi@paytm
+</p>
+
+<button class="copy-btn"
+onclick="copyUPI()">
+📋 Copy UPI ID
+</button>
+
+</div>
+
+<button class="pay-btn"
+onclick="showSuccess()">
+✅ I Have Paid
+</button>
+
+<div class="success"
+id="successBox">
+
+<h2>🎉 Booking Request Submitted</h2>
+
+<br>
+
+<p><b>Doctor:</b> Dr. P. K. Srivastava</p>
+
+<p><b>Date:</b> 15 June 2026</p>
+
+<p><b>Slot:</b> 10:30 AM - 11:00 AM</p>
+
+<br>
+
+<p>
+Booking ID:
+<b>GHH-001</b>
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+function copyUPI(){
+
+let upi =
+document.getElementById("upi").innerText;
+
+navigator.clipboard.writeText(upi);
+
+alert("UPI ID Copied");
+
+}
+
+function showSuccess(){
+
+document.getElementById("successBox")
+.style.display="block";
+
+}
+
+</script>
+
+</body>
+</html>
